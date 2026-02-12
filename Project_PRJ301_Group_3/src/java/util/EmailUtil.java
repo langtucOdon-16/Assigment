@@ -8,6 +8,6 @@ package util;
  *
  * @author DELL
  */
-public class test {
+public class EmailUtil {
     
 }
