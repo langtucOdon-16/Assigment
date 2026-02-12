@@ -70,7 +70,6 @@ public class EmailUtil {
             message.setContent(content, "text/html; charset=UTF-8");
 
             Transport.send(message);
-            System.out.println("Email sent to " + toEmail);
 
         } catch (Exception e) {
             e.printStackTrace();
