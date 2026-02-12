@@ -80,28 +80,30 @@
 
                 <!-- Search Bar -->
                 <div class="search-bar">
-                    <input 
-                        type="text" 
-                        placeholder="Bạn tìm gì hôm nay? (Laptop, PC, màn hình,...)"
-                        class="search-input"
-                        id="searchInput"
-                    >
-                    <button class="search-btn">
-                        <i data-lucide="search"></i>
-                    </button>
+                    <form>
+                        <input 
+                            type="text" 
+                            placeholder="Bạn tìm gì hôm nay? (Laptop, PC, màn hình,...)"
+                            class="search-input"
+                            id="searchInput"
+                        >
+                        <button class="search-btn">
+                            <i data-lucide="search"></i>
+                        </button>
+                    </form>  
                 </div>
 
                 <!-- User & Cart -->
                 <div class="header-actions">
-                     <button class="action-btn cart-btn">
+                     <a class="action-btn cart-btn">
                         <i data-lucide="shopping-cart"></i>
                         <span>Giỏ hàng</span>
                         <span class="cart-badge">3</span>
-                    </button>
-                    <button class="action-btn">
+                    </a>
+                    <a class="action-btn">
                         <i data-lucide="user"></i>
                         <span>Tài khoản</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -158,13 +160,13 @@
             <div class="category-grid-main">
                 <% int topCategory = 1; %>
                 <c:forEach items="${featuredCategories}" var="category">
-                    <button class="category-card">
+                    <a class="category-card">
                         <div class="category-card-icon">
                             <h3><%= topCategory %> </h3>                         
                         </div>
                         <div class="category-card-name">${category.categoryName}</div>
                         <div class="category-card-count">${category.numberOfProducts} sản phẩm</div>
-                    </button>
+                    </a>
                     <% topCategory++; %>        
                 </c:forEach>                
             </div>
@@ -191,48 +193,50 @@
 
                 <div class="product-grid slider-mode" id="hotDealsGrid">
                     <c:forEach items="${top10HotDealProducts}" var="product">
-                        <div class="product-card">
-                            <div class="product-image-wrapper">
-                                <img src="${pageContext.request.contextPath}/images/${product.urlImage}" alt="${product.name}" class="product-image">
-                                <c:if test="${product.discountRate > 0}">
-                                    <div class="product-discount-badge">-${product.discountRate}%</div>
-                                </c:if>
-                            </div>
-                            <div class="product-info">
-                                <div class="product-name">${product.name}</div>
-                                <div class="product-meta">
-                                    <div class="meta-item">${product.category.categoryName}</div>
-                                    <div class="meta-item">${product.brand.brandName}</div>
+                        <a>
+                            <div class="product-card">
+                                <div class="product-image-wrapper">
+                                    <img src="${pageContext.request.contextPath}/images/${product.urlImage}" alt="${product.name}" class="product-image">
+                                    <c:if test="${product.discountRate > 0}">
+                                        <div class="product-discount-badge">-${product.discountRate}%</div>
+                                    </c:if>
                                 </div>
-                                <div class="product-pricing">
-                                    <div class="product-quantity">Còn: ${product.quantity}</div>
-                                    <div class="price-wrapper">
-                                        <c:if test="${product.discountRate > 0}">
-                                            <span class="product-original-price">
-                                                <fmt:formatNumber 
-                                                value="${product.originalPrice}" 
-                                                type="number" 
-                                                groupingUsed="true" 
-                                                maxFractionDigits="0"/>₫
-                                            </span>
-                                        </c:if>
-                                        <span class="product-price"> 
-                                            <fmt:formatNumber 
-                                                value="${product.afterDiscountPrice}" 
-                                                type="number" 
-                                                groupingUsed="true"
-                                                maxFractionDigits="0"/>₫
-                                        </span>  
+                                <div class="product-info">
+                                    <div class="product-name">${product.name}</div>
+                                    <div class="product-meta">
+                                        <div class="meta-item">${product.category.categoryName}</div>
+                                        <div class="meta-item">${product.brand.brandName}</div>
                                     </div>
+                                    <div class="product-pricing">
+                                        <div class="product-quantity">Còn: ${product.quantity}</div>
+                                        <div class="price-wrapper">
+                                            <c:if test="${product.discountRate > 0}">
+                                                <span class="product-original-price">
+                                                    <fmt:formatNumber 
+                                                    value="${product.originalPrice}" 
+                                                    type="number" 
+                                                    groupingUsed="true" 
+                                                    maxFractionDigits="0"/>₫
+                                                </span>
+                                            </c:if>
+                                            <span class="product-price"> 
+                                                <fmt:formatNumber 
+                                                    value="${product.afterDiscountPrice}" 
+                                                    type="number" 
+                                                    groupingUsed="true"
+                                                    maxFractionDigits="0"/>₫
+                                            </span>  
+                                        </div>
+                                    </div>
+                                    <button class="add-to-cart-btn">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        </svg>
+                                        Thêm vào giỏ
+                                    </button>
                                 </div>
-                                <button class="add-to-cart-btn">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                    </svg>
-                                    Thêm vào giỏ
-                                </button>
                             </div>
-                        </div>
+                        </a>
                     </c:forEach>
                 </div>
 
@@ -263,48 +267,50 @@
 
                 <div class="product-grid slider-mode" id="hotSellingGrid">
                     <c:forEach items="${top10SellingProducts}" var="product">
-                        <div class="product-card">
-                            <div class="product-image-wrapper">
-                                <img src="${pageContext.request.contextPath}/images/${product.urlImage}" alt="${product.name}" class="product-image">
-                                <c:if test="${product.discountRate > 0}">
-                                    <div class="product-discount-badge">-${product.discountRate}%</div>
-                                </c:if>
-                            </div>
-                            <div class="product-info">
-                                <div class="product-name">${product.name}</div>
-                                <div class="product-meta">
-                                    <div class="meta-item">${product.category.categoryName}</div>
-                                    <div class="meta-item">${product.brand.brandName}</div>
+                        <a>
+                            <div class="product-card">
+                                <div class="product-image-wrapper">
+                                    <img src="${pageContext.request.contextPath}/images/${product.urlImage}" alt="${product.name}" class="product-image">
+                                    <c:if test="${product.discountRate > 0}">
+                                        <div class="product-discount-badge">-${product.discountRate}%</div>
+                                    </c:if>
                                 </div>
-                                <div class="product-pricing">
-                                    <div class="product-quantity">Còn: ${product.quantity}</div>
-                                    <div class="price-wrapper">
-                                        <c:if test="${product.discountRate > 0}">
-                                            <span class="product-original-price">
-                                                <fmt:formatNumber 
-                                                value="${product.originalPrice}" 
-                                                type="number" 
-                                                groupingUsed="true" 
-                                                maxFractionDigits="0"/>₫
-                                            </span>
-                                        </c:if>
-                                        <span class="product-price"> 
-                                            <fmt:formatNumber 
-                                                value="${product.afterDiscountPrice}" 
-                                                type="number" 
-                                                groupingUsed="true"
-                                                maxFractionDigits="0"/>₫
-                                        </span>  
+                                <div class="product-info">
+                                    <div class="product-name">${product.name}</div>
+                                    <div class="product-meta">
+                                        <div class="meta-item">${product.category.categoryName}</div>
+                                        <div class="meta-item">${product.brand.brandName}</div>
                                     </div>
+                                    <div class="product-pricing">
+                                        <div class="product-quantity">Còn: ${product.quantity}</div>
+                                        <div class="price-wrapper">
+                                            <c:if test="${product.discountRate > 0}">
+                                                <span class="product-original-price">
+                                                    <fmt:formatNumber 
+                                                    value="${product.originalPrice}" 
+                                                    type="number" 
+                                                    groupingUsed="true" 
+                                                    maxFractionDigits="0"/>₫
+                                                </span>
+                                            </c:if>
+                                            <span class="product-price"> 
+                                                <fmt:formatNumber 
+                                                    value="${product.afterDiscountPrice}" 
+                                                    type="number" 
+                                                    groupingUsed="true"
+                                                    maxFractionDigits="0"/>₫
+                                            </span>  
+                                        </div>
+                                    </div>
+                                    <button class="add-to-cart-btn">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        </svg>
+                                        Thêm vào giỏ
+                                    </button>
                                 </div>
-                                <button class="add-to-cart-btn">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                    </svg>
-                                    Thêm vào giỏ
-                                </button>
                             </div>
-                        </div>
+                        </a>
                     </c:forEach>
                 </div>
 
