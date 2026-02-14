@@ -19,96 +19,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="HomeServlet" class="logo-link">
-                        <div class="logo-icon">
-                            <i data-lucide="laptop"></i>
-                        </div>
-                        <div class="logo-text">
-                            <div class="logo-title">Tài Lộc Store</div>
-                            <div class="logo-subtitle">Cửa hàng máy tính</div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Category Menu Button -->
-                <div class="category-menu-wrapper">
-                    <button class="category-btn" id="categoryBtn">
-                        <i data-lucide="menu" id="menuIcon"></i>
-                        <span class="category-text">Danh mục</span>
-                    </button>
-
-                    <!-- Category Dropdown -->
-                    <div class="category-dropdown" id="categoryDropdown">
-                        <div class="category-dropdown-inner">
-                            <h3 class="category-title">Danh mục sản phẩm</h3>
-                            <div class="category-grid">
-                                <c:forEach items="${categories}" var="category">
-                                    <button class="category-item" data-category-id="${category.categoryId}">
-                                        <span>${category.categoryName}</span>
-                                    </button>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Brand Dropdown -->
-                    <div class="brand-dropdown" id="brandDropdown">
-                        <div class="brand-dropdown-inner">
-                            <c:forEach items="${categories}" var="category">
-                                <div class="brand-group" data-category-id="${category.categoryId}">
-                                    <h3 class="brand-title">Hãng sản phẩm</h3>
-                                    <div class="brand-grid">
-                                        <c:forEach items="${brands[category.categoryId]}" var="brand">
-                                            <a class="brand-item">
-                                                <span>${brand.brandName}</span>
-                                            </a>
-                                        </c:forEach>
-                                    </div>  
-                                </div>
-                            </c:forEach>
-                        </div>
-                    </div>
- 
-                    <div class="category-overlay" id="categoryOverlay"></div>
-                </div>
-
-                <!-- Search Bar -->
-                <div class="search-bar">
-                    <form>
-                        <input 
-                            type="text" 
-                            placeholder="Bạn tìm gì hôm nay? (Laptop, PC, màn hình,...)"
-                            class="search-input"
-                            id="searchInput"
-                        >
-                        <button class="search-btn">
-                            <i data-lucide="search"></i>
-                        </button>
-                    </form>  
-                </div>
-
-                <!-- User & Cart -->
-                <div class="header-actions">
-                     <a class="action-btn cart-btn">
-                        <i data-lucide="shopping-cart"></i>
-                        <span>Giỏ hàng</span>
-                        <span class="cart-badge">3</span>
-                    </a>
-                    <a class="action-btn">
-                        <i data-lucide="user"></i>
-                        <span>Tài khoản</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    
+    <jsp:include page="./common/header.jsp"/>
+    
     <!-- Hero Banner Carousel -->
     <section class="hero-banner">
         <div class="carousel-container">
@@ -193,8 +106,8 @@
 
                 <div class="product-grid slider-mode" id="hotDealsGrid">
                     <c:forEach items="${top10HotDealProducts}" var="product">
-                        <a>
-                            <div class="product-card">
+                        <div class="product-card">
+                            <a>
                                 <div class="product-image-wrapper">
                                     <img src="${pageContext.request.contextPath}/images/${product.urlImage}" alt="${product.name}" class="product-image">
                                     <c:if test="${product.discountRate > 0}">
@@ -228,15 +141,15 @@
                                             </span>  
                                         </div>
                                     </div>
-                                    <button class="add-to-cart-btn">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                        </svg>
-                                        Thêm vào giỏ
-                                    </button>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                            <a class="add-to-cart-btn">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                Thêm vào giỏ
+                            </a>
+                        </div>
                     </c:forEach>
                 </div>
 
@@ -267,8 +180,8 @@
 
                 <div class="product-grid slider-mode" id="hotSellingGrid">
                     <c:forEach items="${top10SellingProducts}" var="product">
-                        <a>
-                            <div class="product-card">
+                        <div class="product-card">
+                            <a>
                                 <div class="product-image-wrapper">
                                     <img src="${pageContext.request.contextPath}/images/${product.urlImage}" alt="${product.name}" class="product-image">
                                     <c:if test="${product.discountRate > 0}">
@@ -302,15 +215,15 @@
                                             </span>  
                                         </div>
                                     </div>
-                                    <button class="add-to-cart-btn">
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                        </svg>
-                                        Thêm vào giỏ
-                                    </button>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                            <a class="add-to-cart-btn">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                Thêm vào giỏ
+                            </a>
+                        </div>
                     </c:forEach>
                 </div>
 
@@ -366,87 +279,8 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <!-- Company Info -->
-                <div class="footer-column">
-                    <div class="footer-logo">
-                        <div class="footer-logo-icon">
-                            <i data-lucide="laptop"></i>
-                        </div>
-                        <div>
-                            <div class="footer-logo-title">Tài Lộc Store</div>
-                            <div class="footer-logo-subtitle">Cửa hàng máy tính</div>
-                        </div>
-                    </div>
-                    <p class="footer-description">
-                        Hệ thống bán lẻ máy tính, laptop và phụ kiện công nghệ hàng đầu Việt Nam. 
-                        Cam kết sản phẩm chính hãng, giá tốt nhất.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i data-lucide="facebook"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="youtube"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="instagram"></i></a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="footer-column">
-                    <h3 class="footer-title">Hỗ trợ khách hàng</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Hướng dẫn mua hàng</a></li>
-                        <li><a href="#">Hướng dẫn thanh toán</a></li>
-                        <li><a href="#">Chính sách bảo hành</a></li>
-                    </ul>
-                </div>
-
-                <!-- Categories -->
-                <div class="footer-column">
-                    <h3 class="footer-title">Về chúng tôi</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Giới thiệu chung</a></li>
-                        <li><a href="#">Quy chế hoạt động</a></li>
-                        <li><a href="#">Tin tức khuyến mãi</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="footer-column">
-                    <h3 class="footer-title">Thông tin liên hệ</h3>
-                    <ul class="footer-contact">
-                        <li>
-                            <i data-lucide="map-pin"></i>
-                            <span>Xã Hòa Lạc, Hà Nội</span>
-                        </li>
-                        <li>
-                            <i data-lucide="phone"></i>
-                            <span>Hotline: 1900 xxxx</span>
-                        </li>
-                        <li>
-                            <i data-lucide="mail"></i>
-                            <span>support@techstore.vn</span>
-                        </li>
-                    </ul>
-                    <div class="footer-hours">
-                        <div class="footer-hours-label">Giờ làm việc</div>
-                        <div class="footer-hours-time">8:00 - 22:00 (Cả tuần)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Bar -->
-            <div class="footer-bottom">
-                <p>© 2026 Tài Lộc Store. Tất cả quyền được bảo lưu.</p>
-                <div class="footer-bottom-links">
-                    <a href="#">Điều khoản sử dụng</a>
-                    <a href="#">Chính sách bảo mật</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    
+    <jsp:include page="./common/footer.jsp"/>
 
     <script src="./js/home.js"></script>
     <script>

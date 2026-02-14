@@ -5,27 +5,20 @@
 
 package controller;
 
-import dao.BrandDAO;
 import dao.CategoryDAO;
 import dao.ProductDAO;
-import dto.BrandDTO;
-import dto.CategoryDTO;
-import dto.CategoryWithCountDTO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
-* @author NamTQ
+ * @author NamTQ
  * Date: 08/02/2026
- * Description: The Servlet coordinates the activities of the home page.
+ * Description: The Servlet coordinates the activities of the Home page.
  */
 @WebServlet(name="HomeServlet", urlPatterns={"/HomeServlet"})
 public class HomeServlet extends HttpServlet {
@@ -41,7 +34,6 @@ public class HomeServlet extends HttpServlet {
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        loadCategoriesAndBrands(request);
         loadFeaturedCategories(request);
         loadTop10Products(request);
         
@@ -84,22 +76,6 @@ public class HomeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void loadCategoriesAndBrands (HttpServletRequest request){
-        CategoryDAO categoryDAO = new CategoryDAO();
-        BrandDAO brandDAO = new BrandDAO();
-        
-        List<CategoryDTO> categoryList = categoryDAO.getAllCategory();
-        
-        Map<Integer, List<BrandDTO>> brandMap = new HashMap<>();
-        for (CategoryDTO categoryDTO : categoryList){
-            int key = categoryDTO.getCategoryId();
-            brandMap.put(key, brandDAO.getBrandsByCategoryId(key));
-        }
-        
-        request.setAttribute("categories", categoryList);
-        request.setAttribute("brands", brandMap);
-    }
-    
     private void loadFeaturedCategories (HttpServletRequest request){
         CategoryDAO categoryDAO = new CategoryDAO();
         request.setAttribute("featuredCategories", categoryDAO.getFeaturedCategories());

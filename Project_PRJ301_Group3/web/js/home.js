@@ -10,12 +10,12 @@
 */
 
 // Category Menu Toggle
-function initCategoryMenu() {
+function initMenu() {
     const categoryBtn = document.getElementById('categoryBtn');
     const categoryDropdown = document.getElementById('categoryDropdown');
     const categoryOverlay = document.getElementById('categoryOverlay');
 
-    function toggleCategoryMenu() {
+    function toggleMenu() {
         const isActive = categoryDropdown.classList.contains('active');
         
         if (isActive) {
@@ -28,16 +28,16 @@ function initCategoryMenu() {
     }
 
     if (categoryBtn) {
-        categoryBtn.addEventListener('click', toggleCategoryMenu);
+        categoryBtn.addEventListener('click', toggleMenu);
     }
 
     if (categoryOverlay) {
-        categoryOverlay.addEventListener('click', toggleCategoryMenu);
+        categoryOverlay.addEventListener('click', toggleMenu);
     }
 }
 
 // Brand Menu Toggle
-function initBrandMenu() {
+function initCategoryBrandMenu() {
     const categoryItems = document.querySelectorAll('.category-item');
     const brandDropdown = document.getElementById('brandDropdown');
     const categoryOverlay = document.getElementById('categoryOverlay');
@@ -52,30 +52,31 @@ function initBrandMenu() {
         preItemCategoryId = categoryId;
     }
     
-    function toggleBrandMenu(item) {
-        const isActive = brandDropdown.classList.contains('active');
-        
-        if (isActive && item === preItem){
-            brandDropdown.classList.remove('active');
-            preItem = null;
-            item.blur();
-        } else {
-            brandDropdown.classList.add('active'); 
-            preItem = item;
+    function toggleCategoryBrandMenu(item) {
+        brandDropdown.classList.add('active'); 
+        item.classList.add('active');
+        if (preItem !== null && preItem !== item){
+            preItem.classList.remove('active');
         }
+        preItem = item;
     }
     
     categoryItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('mouseenter', () => {
             const categoryId = item.dataset.categoryId;
             showBrands(categoryId);
-            toggleBrandMenu(item);
+            toggleCategoryBrandMenu(item);
         }); 
     });
     
     if (categoryOverlay) {
-        categoryOverlay.addEventListener('click', () => brandDropdown.classList.remove('active'));
-        preItem = null;
+        categoryOverlay.addEventListener('click', () => {
+            brandDropdown.classList.remove('active');
+            categoryItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            preItem = null;
+        });
     }
 }
 
@@ -180,8 +181,8 @@ function setupProductSlider(containerId, prevBtnId, nextBtnId) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    initCategoryMenu();
-    initBrandMenu();
+    initMenu();
+    initCategoryBrandMenu();
     initCarousel();
     
     setupProductSlider('hotDealsGrid', 'hotDealsPrev', 'hotDealsNext');

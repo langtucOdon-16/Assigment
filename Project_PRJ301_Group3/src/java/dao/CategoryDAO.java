@@ -32,6 +32,9 @@ public class CategoryDAO extends DBContext{
                     rs.getNString("categoryName"))
                 );
             }
+            
+            rs.close();
+            stm.close();
         } catch (SQLException e) {
             System.out.println("getCategory: " + e.getMessage());
         }
@@ -51,6 +54,9 @@ public class CategoryDAO extends DBContext{
                     rs.getInt("numberOfProducts"))
                 );
             }
+            
+            rs.close();
+            stm.close();
         } catch (SQLException e) {
             System.out.println("getCategory: " + e.getMessage());
         }

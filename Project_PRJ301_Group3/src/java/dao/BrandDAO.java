@@ -36,6 +36,9 @@ public class BrandDAO extends DBContext{
                         rs.getNString("brandName"))
                 );
             }
+            
+            rs.close();
+            stm.close();
         } catch (SQLException e) {
             System.out.println("getBrandByCategoryId: " + e.getMessage());
         }
