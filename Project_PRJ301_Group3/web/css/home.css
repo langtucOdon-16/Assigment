@@ -175,6 +175,7 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     color: #1f2937;
+    text-decoration: none;
 }
 
 .brand-item:hover {
@@ -474,6 +475,7 @@ body {
     gap: 0.5rem;
     cursor: pointer;
     transition: all 0.3s;
+    text-decoration: none;
 }
 
 .category-card:hover {
@@ -595,6 +597,10 @@ body {
 .product-card:hover {
     border-color: #fca5a5;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.product-card a {
+    text-decoration: none;
 }
 
 .product-image-wrapper {

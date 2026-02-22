@@ -7,6 +7,7 @@ package dao;
 import dal.DBContext;
 import dto.CategoryDTO;
 import dto.CategoryWithCountDTO;
+import dto.CategoryWithStatusCheckboxDTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +37,7 @@ public class CategoryDAO extends DBContext{
             rs.close();
             stm.close();
         } catch (SQLException e) {
-            System.out.println("getCategory: " + e.getMessage());
+            System.out.println("getAllCategory: " + e.getMessage());
         }
         return data;
     }
@@ -58,7 +59,30 @@ public class CategoryDAO extends DBContext{
             rs.close();
             stm.close();
         } catch (SQLException e) {
-            System.out.println("getCategory: " + e.getMessage());
+            System.out.println("getFeaturedCategories: " + e.getMessage());
+        }
+        return data;
+    }
+    
+    public ArrayList<CategoryWithStatusCheckboxDTO> getAllCategoryWithStatusCheckbox() {
+        ArrayList<CategoryWithStatusCheckboxDTO> data = new ArrayList<>();
+        data.add(new CategoryWithStatusCheckboxDTO(-1, "Tất cả", false));
+        try {
+            String strSQL = "SELECT * FROM Category ORDER BY categoryName ASC;";
+            PreparedStatement stm = connection.prepareStatement(strSQL);       
+            ResultSet rs = stm.executeQuery();                          
+            while (rs.next()) {
+                data.add(new CategoryWithStatusCheckboxDTO(
+                    rs.getInt("categoryId"), 
+                    rs.getNString("categoryName"),
+                    false)
+                );
+            }
+            
+            rs.close();
+            stm.close();
+        } catch (SQLException e) {
+            System.out.println("getAllCategoryWithStatusCheckbox: " + e.getMessage());
         }
         return data;
     }

@@ -37,7 +37,8 @@
                         <h3 class="category-title">Danh mục sản phẩm</h3>
                         <div class="category-grid">
                             <c:forEach items="${categories}" var="category">
-                                <a class="category-item" data-category-id="${category.categoryId}">
+                                <a class="category-item" data-category-id="${category.categoryId}"
+                                   href="SearchServlet?categoryIdName=${category.categoryId}">
                                     <span>${category.categoryName}</span>
                                 </a>
                             </c:forEach>
@@ -53,7 +54,8 @@
                                 <h3 class="brand-title">Hãng sản phẩm</h3>
                                 <div class="brand-grid">
                                     <c:forEach items="${brands[category.categoryId]}" var="brand">
-                                        <a class="brand-item">
+                                        <a class="brand-item"
+                                           href="SearchServlet?categoryIdName=${category.categoryId}&brandIdName=${brand.brandId}">
                                             <span>${brand.brandName}</span>
                                         </a>
                                     </c:forEach>
@@ -68,14 +70,16 @@
 
             <!-- Search Bar -->
             <div class="search-bar">
-                <form>
+                <form action="SearchServlet" method="get">
                     <input 
                         type="text" 
                         placeholder="Bạn tìm gì hôm nay? (Laptop, PC, màn hình,...)"
                         class="search-input"
                         id="searchInput"
+                        name="keyword"
+                        value="${param.keyword}"
                     >
-                    <button class="search-btn">
+                    <button class="search-btn" type="submit">
                         <i data-lucide="search"></i>
                     </button>
                 </form>  

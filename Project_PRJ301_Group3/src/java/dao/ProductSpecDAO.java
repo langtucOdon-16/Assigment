@@ -42,7 +42,7 @@ public class ProductSpecDAO extends DBContext{
             rs.close();
             stm.close();
         } catch (SQLException e) {
-            System.out.println("getCategory: " + e.getMessage());
+            System.out.println("getProductSpecs: " + e.getMessage());
         }
         return data;
     }

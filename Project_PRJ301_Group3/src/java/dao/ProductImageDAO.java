@@ -40,7 +40,7 @@ public class ProductImageDAO extends DBContext{
             rs.close();
             stm.close();
         } catch (SQLException e) {
-            System.out.println("getCategory: " + e.getMessage());
+            System.out.println("getProductImages: " + e.getMessage());
         }
         return data;
     }

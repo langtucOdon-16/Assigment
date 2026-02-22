@@ -5,6 +5,29 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<c:url var="changePage" value="SearchServlet">
+
+    <c:param name="keyword" value="${param.keyword}" />
+    
+    <c:param name="sortingType" value="${param.sortingType}" />
+
+    <c:forEach items="${paramValues.categoryIdName}" var="c">
+        <c:param name="categoryIdName" value="${c}" />
+    </c:forEach>
+
+    <c:forEach items="${paramValues.brandIdName}" var="b">
+        <c:param name="brandIdName" value="${b}" />
+    </c:forEach>
+
+    <c:forEach items="${paramValues.priceIdName}" var="p">
+        <c:param name="priceIdName" value="${p}" />
+    </c:forEach>
+
+</c:url>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -17,101 +40,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="/" class="logo-link">
-                        <div class="logo-icon">
-                            <i data-lucide="laptop"></i>
-                        </div>
-                        <div class="logo-text">
-                            <div class="logo-title">Tài Lộc Store</div>
-                            <div class="logo-subtitle">Cửa hàng máy tính</div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Category Menu Button -->
-                <div class="category-menu-wrapper">
-                    <button class="category-btn" id="categoryBtn">
-                        <i data-lucide="menu" id="menuIcon"></i>
-                        <i data-lucide="x" id="closeIcon" style="display: none;"></i>
-                        <span class="category-text">Danh mục</span>
-                    </button>
-
-                    <!-- Category Dropdown -->
-                    <div class="category-dropdown" id="categoryDropdown">
-                        <div class="category-dropdown-inner">
-                            <h3 class="category-title">Danh mục sản phẩm</h3>
-                            <div class="category-grid">
-                                <button class="category-item">
-                                    <i data-lucide="laptop"></i>
-                                    <span>Laptop</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="cpu"></i>
-                                    <span>PC/Máy Tính Bàn</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="monitor"></i>
-                                    <span>Màn Hình</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="keyboard"></i>
-                                    <span>Bàn Phím</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="mouse"></i>
-                                    <span>Chuột</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="headphones"></i>
-                                    <span>Tai Nghe</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="speaker"></i>
-                                    <span>Loa</span>
-                                </button>
-                                <button class="category-item">
-                                    <i data-lucide="hard-drive"></i>
-                                    <span>Ổ Cứng & SSD</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="category-overlay" id="categoryOverlay"></div>
-                </div>
-
-                <!-- Search Bar -->
-                <div class="search-bar">
-                    <input 
-                        type="text" 
-                        placeholder="Bạn tìm gì hôm nay? (Laptop, PC, màn hình...)"
-                        class="search-input"
-                        id="searchInput"
-                    >
-                    <button class="search-btn">
-                        <i data-lucide="search"></i>
-                    </button>
-                </div>
-
-                <!-- User & Cart -->
-                <div class="header-actions">
-                     <button class="action-btn cart-btn">
-                        <i data-lucide="shopping-cart"></i>
-                        <span>Giỏ hàng</span>
-                        <span class="cart-badge">3</span>
-                    </button>
-                    <button class="action-btn">
-                        <i data-lucide="user"></i>
-                        <span>Tài khoản</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <jsp:include page="./common/header.jsp"/>
 
     <!-- Search Results -->
     <main class="search-results-main">
@@ -120,158 +49,185 @@
             <div class="search-layout">
                 <!-- Sidebar Filters -->
                 <aside class="search-sidebar">
-                    <div class="filter-section">
-                        <button class="filter-toggle" id="filterToggle">
-                            <i data-lucide="sliders-horizontal"></i>
-                            <span>Bộ lọc tìm kiếm</span>
-                            <i data-lucide="chevron-down" class="toggle-icon"></i>
-                        </button>
-                    </div>
-
-                    <!-- Brand Filter -->
-                    <div class="filter-group">
-                        <div class="filter-header">
-                            <h3>Hãng sản xuất</h3>
-                            <button class="filter-collapse" data-target="brandFilter">
-                                <i data-lucide="chevron-up"></i>
-                            </button>
-                        </div>
-                        <div class="filter-content" id="brandFilter">
-                            <div class="brand-grid">
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23333' font-size='10' font-weight='bold'%3ECORSAIR%3C/text%3E%3C/svg%3E" alt="Corsair">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%2376b900' font-size='10' font-weight='bold'%3EKangaroo%3C/text%3E%3C/svg%3E" alt="Kangaroo">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23ff6900' font-size='10' font-weight='bold'%3EXIAOMI%3C/text%3E%3C/svg%3E" alt="Xiaomi">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%230066cc' font-size='10' font-weight='bold'%3ECoway%3C/text%3E%3C/svg%3E" alt="Coway">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-size='10' font-weight='bold'%3EDeepCool%3C/text%3E%3C/svg%3E" alt="DeepCool">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23ff9900' font-size='10' font-weight='bold'%3EGoldSun%3C/text%3E%3C/svg%3E" alt="GoldSun">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23000' font-size='10' font-weight='bold'%3EJoyoung%3C/text%3E%3C/svg%3E" alt="Joyoung">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23e60000' font-size='10' font-weight='bold'%3ESUNHOUSE%3C/text%3E%3C/svg%3E" alt="Sunhouse">
-                                </button>
-                                <button class="brand-item">
-                                    <img src="data:image/svg+xml,%3Csvg width='60' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23107c10' font-size='10' font-weight='bold'%3EXBOX%3C/text%3E%3C/svg%3E" alt="Xbox">
-                                </button>
-                            </div>
-                            <button class="btn-show-more">Thu gọn</button>
-                        </div>
-                    </div>
-
-                    <!-- Price Filter -->
-                    <div class="filter-group">
-                        <div class="filter-header">
-                            <h3>Mức giá</h3>
-                            <button class="filter-collapse" data-target="priceFilter">
-                                <i data-lucide="chevron-up"></i>
-                            </button>
-                        </div>
-                        <div class="filter-content" id="priceFilter">
-                            <div class="price-checkboxes">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" checked>
-                                    <span class="checkbox-label">Tất cả</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span class="checkbox-label">Dưới 2 triệu</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span class="checkbox-label">Từ 2 - 4 triệu</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span class="checkbox-label">Từ 4 - 7 triệu</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span class="checkbox-label">Từ 7 - 13 triệu</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox">
-                                    <span class="checkbox-label">Trên 13 triệu</span>
-                                </label>
+                    <form action="SearchServlet" method="get">
+                        <input 
+                            type="hidden" 
+                            name="keyword"
+                            value="${param.keyword}"
+                        >
+                        <div class="filter-section">
+                            <div class="filter-toggle" id="filterToggle">
+                                <i data-lucide="sliders-horizontal"></i>
+                                <span>Bộ lọc tìm kiếm</span>
                             </div>
                         </div>
-                    </div>
+
+                        <!-- Sort Filter-->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h3>Sắp xếp</h3>
+                                <button class="filter-collapse" data-target="sortFilter"  type="button">
+                                    <i data-lucide="chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="filter-content" id="sortFilter">
+                                <div class="radioes">
+                                    <label class="sort-radio-item">
+                                        <input 
+                                            type="radio" 
+                                            name="sortingType" 
+                                            value="decreaseDiscount" 
+                                            ${sortingType == 'decreaseDiscount' ? 'checked' : ''}
+                                        >
+                                        <span class="radio-label">Giảm giá giảm dần</span>
+                                    </label>
+                                    <label class="sort-radio-item">
+                                        <input 
+                                            type="radio" 
+                                            name="sortingType" 
+                                            value="increasingPrice" 
+                                            ${sortingType == 'increasingPrice' ? 'checked' : ''}
+                                        >
+                                        <span class="radio-label">Giá tăng dần</span>
+                                    </label>
+                                    <label class="sort-radio-item">
+                                        <input 
+                                            type="radio" 
+                                            name="sortingType" 
+                                            value="decreasePrice" 
+                                            ${sortingType == 'decreasePrice' ? 'checked' : ''}
+                                        >
+                                        <span class="radio-label">Giá giảm dần</span>
+                                    </label>
+                                </div>    
+                            </div>
+                        </div>
+                        
+                        <!-- Category Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h3>Danh mục sản phẩm</h3>
+                                <button class="filter-collapse" data-target="categoryFilter"  type="button">
+                                    <i data-lucide="chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="filter-content" id="categoryFilter">
+                                <div class="checkboxes">
+                                    <c:forEach items="${allCategory}" var="category">
+                                        <label class="category-checkbox-item">
+                                            <input 
+                                                type="checkbox" 
+                                                name="categoryIdName" 
+                                                value="${category.categoryId}" 
+                                                ${category.status ? 'checked' : ''}
+                                            >
+                                            <span class="checkbox-label">${category.categoryName}</span>
+                                        </label>
+                                    </c:forEach> 
+                                </div>    
+                            </div>
+                        </div>
+
+                        <!-- Brand Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h3>Hãng sản xuất</h3>
+                                <button class="filter-collapse" data-target="brandFilter" type="button">
+                                    <i data-lucide="chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="filter-content" id="brandFilter">
+                                <div class="checkboxes">
+                                    <c:forEach items="${allBrand}" var="brand">
+                                        <label class="brand-checkbox-item">
+                                            <input 
+                                                type="checkbox" 
+                                                name="brandIdName" 
+                                                value="${brand.brandId}"
+                                                ${brand.status ? 'checked' : ''}
+                                            >
+                                            <span class="checkbox-label">${brand.brandName}</span>
+                                        </label>
+                                    </c:forEach> 
+                                </div>  
+                            </div>
+                        </div>
+
+                        <!-- Price Filter -->
+                        <div class="filter-group">
+                            <div class="filter-header">
+                                <h3>Mức giá</h3>
+                                <button class="filter-collapse" data-target="priceFilter" type="button">
+                                    <i data-lucide="chevron-up"></i>
+                                </button>
+                            </div>
+                            <div class="filter-content" id="priceFilter">
+                                <div class="checkboxes">
+                                    <c:forEach items="${allPriceFilters}" var="priceFilters">
+                                        <label class="price-checkbox-item">
+                                            <input 
+                                                type="checkbox" 
+                                                name="priceIdName" 
+                                                value="${priceFilters.priceFiltersId}"
+                                                ${priceFilters.status ? 'checked' : ''}
+                                            >
+                                            <span class="checkbox-label">${priceFilters.label}</span>
+                                        </label>
+                                    </c:forEach> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div>
+                            <button class="filter-submit-btn" type="submit">
+                                <span class="filter-submit-text">Áp dụng</span>
+                            </button>
+                        </div>  
+                    </form>
                 </aside>
 
                 <!-- Results Content -->
                 <div class="search-content">
-                    <!-- Quick Category Filters -->
-                    <div class="quick-filters">
-                        <button class="quick-filter-btn active">
-                            <i data-lucide="grid"></i>
-                            <span>Tất cả</span>
-                        </button>
-                        <button class="quick-filter-btn">
-                            <i data-lucide="plug"></i>
-                            <span>Laptop</span>
-                            <span class="filter-count">(10)</span>
-                        </button>
-                        <button class="quick-filter-btn">
-                            <i data-lucide="smartphone"></i>
-                            <span>Màn hình</span>
-                            <span class="filter-count">(7)</span>
-                        </button>
-                        <button class="quick-filter-btn">
-                            <i data-lucide="watch"></i>
-                            <span>Chuột</span>
-                            <span class="filter-count">(3)</span>
-                        </button>
-                        <button class="quick-filter-btn">
-                            <i data-lucide="wind"></i>
-                            <span>Loa</span>
-                            <span class="filter-count">(3)</span>
-                        </button>
-                        <button class="quick-filter-btn">
-                            <i data-lucide="cpu"></i>
-                            <span>PC</span>
-                            <span class="filter-count">(1)</span>
-                        </button>
-                        <button class="quick-filter-btn">
-                            <i data-lucide="chef-hat"></i>
-                            <span>Bàn phím</span>
-                            <span class="filter-count">(1)</span>
-                        </button>
-                    </div>
-
                     <!-- Results Header -->
                     <div class="results-header">
                         <div class="results-info">
-                            Tìm thấy <strong>25 kết quả</strong> với từ khóa <strong>"ap"</strong>
-                        </div>
-                        <div class="sort-options">
-                            <button class="sort-btn active">Nổi bật</button>
-                            <button class="sort-btn">Giá tăng dần</button>
-                            <button class="sort-btn">Giá giảm dần</button>
+                            Tìm thấy <strong>${numberOfResult} kết quả</strong> với từ khóa <strong>"${param.keyword}"</strong>
                         </div>
                     </div>
 
                     <!-- Product Grid -->
                     <div class="search-results-grid" id="searchResultsGrid">
-                        <!-- Products will be loaded here by JavaScript -->
+                        <c:forEach items="${searchProduct}" var="product">
+                            <%@ include file="./common/product-card.jsp" %>
+                        </c:forEach>
                     </div>
 
-                    <!-- Load More -->
-                    <div class="load-more-wrapper">
-                        <button class="btn-load-more">
-                            Xem thêm sản phẩm
-                            <i data-lucide="chevron-down"></i>
-                        </button>
+                    <!-- Pagination -->
+                    <div class="pagination-wrapper">
+                        <div class="pagination">
+                            <a href="${changePage}&currentPage=${currentPage - 1}" class="pagination-btn-link">
+                                <button class="pagination-btn pagination-prev" ${currentPage == 1 ? 'disabled' : ''}>
+                                    <i data-lucide="chevron-left"></i>
+                                    <span>Trước</span>
+                                </button>
+                            </a>
+                            
+                            
+                            <div class="pagination-numbers">
+                                <c:forEach items="${numberPageList}" var="page">
+                                    <a class="pagination-number ${page == currentPage ? 'active' : ''}" 
+                                       href="${changePage}&currentPage=${page}">${page}</a>
+                                </c:forEach>
+                            </div>
+                            
+                            <a href="${changePage}&currentPage=${currentPage + 1}" class="pagination-btn-link">
+                                <button class="pagination-btn pagination-next" ${currentPage == numberOfPage ? 'disabled' : ''}>
+                                     <span>Tiếp</span>
+                                     <i data-lucide="chevron-right"></i>
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -279,90 +235,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <!-- Company Info -->
-                <div class="footer-column">
-                    <div class="footer-logo">
-                        <div class="footer-logo-icon">
-                            <i data-lucide="laptop"></i>
-                        </div>
-                        <div>
-                            <div class="footer-logo-title">ComputerStore</div>
-                            <div class="footer-logo-subtitle">Cửa hàng máy tính</div>
-                        </div>
-                    </div>
-                    <p class="footer-description">
-                        Hệ thống bán lẻ máy tính, laptop và phụ kiện công nghệ hàng đầu Việt Nam. 
-                        Cam kết sản phẩm chính hãng, giá tốt nhất.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i data-lucide="facebook"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="youtube"></i></a>
-                        <a href="#" class="social-link"><i data-lucide="instagram"></i></a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="footer-column">
-                    <h3 class="footer-title">Hỗ trợ khách hàng</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Hướng dẫn mua hàng</a></li>
-                        <li><a href="#">Chính sách bảo hành</a></li>
-                        <li><a href="#">Chính sách đổi trả</a></li>
-                        <li><a href="#">Hướng dẫn thanh toán</a></li>
-                        <li><a href="#">Chính sách vận chuyển</a></li>
-                        <li><a href="#">Câu hỏi thường gặp</a></li>
-                    </ul>
-                </div>
-
-                <!-- Categories -->
-                <div class="footer-column">
-                    <h3 class="footer-title">Về chúng tôi</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Giới thiệu chung</a></li>
-                        <li><a href="#">Quy chế hoạt động</a></li>
-                        <li><a href="#">Chính sách bảo hành</a></li>
-                        <li><a href="#">Tra cứu hóa đơn điện tử</a></li>
-                        <li><a href="#">Tin tức khuyến mãi</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="footer-column">
-                    <h3 class="footer-title">Thông tin liên hệ</h3>
-                    <ul class="footer-contact">
-                        <li>
-                            <i data-lucide="map-pin"></i>
-                            <span>Xã Hòa Lạc, Hà Nội</span>
-                        </li>
-                        <li>
-                            <i data-lucide="phone"></i>
-                            <span>Hotline: 1900 xxxx</span>
-                        </li>
-                        <li>
-                            <i data-lucide="mail"></i>
-                            <span>support@techstore.vn</span>
-                        </li>
-                    </ul>
-                    <div class="footer-hours">
-                        <div class="footer-hours-label">Giờ làm việc</div>
-                        <div class="footer-hours-time">8:00 - 22:00 (Cả tuần)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Bar -->
-            <div class="footer-bottom">
-                <p>© 2026 Tài Lộc Store. Tất cả quyền được bảo lưu.</p>
-                <div class="footer-bottom-links">
-                    <a href="#">Điều khoản sử dụng</a>
-                    <a href="#">Chính sách bảo mật</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <jsp:include page="./common/footer.jsp"/>
 
     <script src="./js/home.js"></script>
     <script src="./js/search.js"></script>

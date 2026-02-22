@@ -6,6 +6,7 @@ package dao;
 
 import dal.DBContext;
 import dto.BrandDTO;
+import dto.BrandWithStatusCheckboxDTO;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +42,52 @@ public class BrandDAO extends DBContext{
             stm.close();
         } catch (SQLException e) {
             System.out.println("getBrandByCategoryId: " + e.getMessage());
+        }
+        return data;
+    }
+    
+    public ArrayList<BrandDTO> getAllBrand(){
+        ArrayList<BrandDTO> data = new ArrayList<>();
+        try {
+            String strSQL = "SELECT * " 
+                    + "FROM Brand "
+                    + "ORDER BY brandName ASC; ";
+            PreparedStatement stm = connection.prepareStatement(strSQL); 
+            ResultSet rs = stm.executeQuery();                          
+            while (rs.next()) {
+                data.add(new BrandDTO(
+                        rs.getInt("brandId"), 
+                        rs.getNString("brandName"))
+                );
+            }
+            
+            rs.close();
+            stm.close();
+        } catch (SQLException e) {
+            System.out.println("getAllBrand: " + e.getMessage());
+        }
+        return data;
+    }
+    
+    public  ArrayList<BrandWithStatusCheckboxDTO> getAllBrandWithStatusCheckbox (){
+        ArrayList<BrandWithStatusCheckboxDTO> data = new ArrayList<>();
+        data.add(new BrandWithStatusCheckboxDTO(-1, "Tất cả", false));
+        try {
+            String strSQL = "SELECT * FROM Brand ORDER BY brandName ASC;";
+            PreparedStatement stm = connection.prepareStatement(strSQL); 
+            ResultSet rs = stm.executeQuery();                          
+            while (rs.next()) {
+                data.add(new BrandWithStatusCheckboxDTO(
+                        rs.getInt("brandId"), 
+                        rs.getNString("brandName"),
+                        false)
+                );
+            }
+            
+            rs.close();
+            stm.close();
+        } catch (SQLException e) {
+            System.out.println("getAllBrandWithStatusCheckbox: " + e.getMessage());
         }
         return data;
     }

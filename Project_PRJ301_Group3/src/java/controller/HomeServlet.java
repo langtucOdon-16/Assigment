@@ -40,6 +40,17 @@ public class HomeServlet extends HttpServlet {
         request.getRequestDispatcher("home.jsp").forward(request, response);
     } 
 
+    private void loadFeaturedCategories (HttpServletRequest request){
+        CategoryDAO categoryDAO = new CategoryDAO();
+        request.setAttribute("featuredCategories", categoryDAO.getFeaturedCategories());
+    }
+    
+    private void loadTop10Products (HttpServletRequest request){
+        ProductDAO productDAO = new ProductDAO();
+        request.setAttribute("top10HotDealProducts", productDAO.getTop10HotDealProducts());
+        request.setAttribute("top10SellingProducts", productDAO.getTop10SellingProducts());
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -75,15 +86,4 @@ public class HomeServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void loadFeaturedCategories (HttpServletRequest request){
-        CategoryDAO categoryDAO = new CategoryDAO();
-        request.setAttribute("featuredCategories", categoryDAO.getFeaturedCategories());
-    }
-    
-    private void loadTop10Products (HttpServletRequest request){
-        ProductDAO productDAO = new ProductDAO();
-        request.setAttribute("top10HotDealProducts", productDAO.getTop10HotDealProducts());
-        request.setAttribute("top10SellingProducts", productDAO.getTop10SellingProducts());
-    }
 }
