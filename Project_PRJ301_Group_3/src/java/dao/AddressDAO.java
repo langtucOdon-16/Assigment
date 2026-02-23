@@ -5,8 +5,6 @@
 package dao;
 
 import dal.DBContext;
-import jakarta.servlet.ServletContext;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,15 +19,7 @@ import model.AddressDTO;
  * @description: Lop AddressDAO chiu trach nhiem truy xuat va thao tac du lieu
  * dia chi tu co so du lieu
  */
-public class AddressDAO {
-
-    private Connection connection;
-
-    //Khởi tạo kết nối cơ sở dữ liệu bằng ServletContext
-    public AddressDAO(ServletContext context) {
-        DBContext db = new DBContext(context);
-        this.connection = db.getConnection();
-    }
+public class AddressDAO extends DBContext {
 
     //Truy xuất tất cả các địa chỉ từ một tài khoản cụ thể
     public List<AddressDTO> getByAccountId(int accountId) {

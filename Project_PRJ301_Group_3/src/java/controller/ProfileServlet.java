@@ -104,7 +104,7 @@ public class ProfileServlet extends HttpServlet {
         }
 
         if ("address".equals(tab)) {
-            AddressDAO addressDAO = new AddressDAO(getServletContext());
+            AddressDAO addressDAO = new AddressDAO();
             List<AddressDTO> addressList = addressDAO.getByAccountId(acc.getAccountId());
             request.setAttribute("addressList", addressList);
         }

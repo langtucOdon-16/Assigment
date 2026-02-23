@@ -94,8 +94,7 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         
-        ServletContext context = getServletContext();
-        AccountDAO dao = new AccountDAO(context);
+        AccountDAO dao = new AccountDAO();
         
         AccountDTO acc = dao.getAccountByEmailAndPassword(email, password);
         

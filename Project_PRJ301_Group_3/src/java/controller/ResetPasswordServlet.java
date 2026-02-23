@@ -111,7 +111,7 @@ public class ResetPasswordServlet extends HttpServlet {
         }
 
         try {
-            AccountDAO dao = new AccountDAO(getServletContext());
+            AccountDAO dao = new AccountDAO();
             boolean success = dao.updatePassword(email, newPassword);
 
             if (success) {

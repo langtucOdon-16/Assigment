@@ -104,7 +104,7 @@ public class ChangePasswordServlet extends HttpServlet {
             return;
         }
         
-        AccountDAO dao = new AccountDAO(getServletContext());
+        AccountDAO dao = new AccountDAO();
         
         boolean success = dao.updatePassword(acc.getAccountId(), newPassword);
         

@@ -90,7 +90,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         int role = 0;
         
-        AccountDAO dao = new AccountDAO(getServletContext());
+        AccountDAO dao = new AccountDAO();
         
         if (!password.equals(confirmPassword)) {
             request.setAttribute("error", "Mật khẩu xác nhận không khớp!");

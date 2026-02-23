@@ -119,7 +119,7 @@ public class EditAddressServlet extends HttpServlet {
         }
 
         try {
-            AddressDAO dao = new AddressDAO(getServletContext());
+            AddressDAO dao = new AddressDAO();
 
             boolean updated = dao.updateAddress(addressId,acc.getAccountId(),addressName.trim(),phone.trim());
 
