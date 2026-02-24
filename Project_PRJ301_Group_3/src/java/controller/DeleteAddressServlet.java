@@ -90,7 +90,7 @@ public class DeleteAddressServlet extends HttpServlet {
         try {
             int addressId = Integer.parseInt(idRaw);
 
-            AddressDAO dao = new AddressDAO(getServletContext());
+            AddressDAO dao = new AddressDAO();
             boolean result = dao.deleteAddress(addressId, acc.getAccountId());
 
             if (result) {

@@ -130,7 +130,7 @@ public class AddAddressServlet extends HttpServlet {
         }
 
         try {
-            AddressDAO dao = new AddressDAO(getServletContext());
+            AddressDAO dao = new AddressDAO();
             boolean inserted = dao.insertAddress(acc.getAccountId(),
                     addressName.trim(),
                     phone.trim());

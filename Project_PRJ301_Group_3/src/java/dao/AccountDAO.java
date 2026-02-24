@@ -5,8 +5,6 @@
 package dao;
 
 import dal.DBContext;
-import jakarta.servlet.ServletContext;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,15 +17,7 @@ import model.AccountDTO;
  * @description: Lop AccountDAO chiu trach nhiem truy xuat va thao tac du lieu
  * tai khoan tu co so du lieu
  */
-public class AccountDAO {
-
-    private Connection connection;
-
-    //Khởi tạo kết nối cơ sở dữ liệu bằng ServletContext
-    public AccountDAO(ServletContext context) {
-        DBContext db = new DBContext(context);
-        this.connection = db.getConnection();
-    }
+public class AccountDAO extends DBContext {
 
     //Lấy tài khoản theo email và password trong cơ sở dữ liệu
     public AccountDTO getAccountByEmailAndPassword(String email, String password) {

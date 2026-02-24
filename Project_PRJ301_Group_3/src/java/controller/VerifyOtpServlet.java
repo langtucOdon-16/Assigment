@@ -116,7 +116,7 @@ public class VerifyOtpServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        AccountDAO dao = new AccountDAO(getServletContext());
+        AccountDAO dao = new AccountDAO();
 
         String action = request.getParameter("action");
         String purpose = (String) session.getAttribute("otpPurpose");

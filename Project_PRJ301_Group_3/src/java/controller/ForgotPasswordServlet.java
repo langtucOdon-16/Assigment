@@ -86,7 +86,7 @@ public class ForgotPasswordServlet extends HttpServlet {
     throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        AccountDAO dao = new AccountDAO(getServletContext());
+        AccountDAO dao = new AccountDAO();
 
         String email = request.getParameter("email");
 
